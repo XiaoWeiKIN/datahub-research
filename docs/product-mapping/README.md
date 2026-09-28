@@ -12,33 +12,54 @@
 2. [Metadata Model as Context Substrate](02-metadata-model-as-context-substrate.md)
 3. [Context Lifecycle Product Mapping](03-context-lifecycle.md)
 4. [Agent Governance Product Mapping](04-agent-governance.md)
+5. [OSS vs Cloud Context Architecture](05-oss-vs-cloud-context-architecture.md)
 
-## 下一步
+## Phase 2 完成
 
-5. **OSS vs Cloud Context Architecture**
-
-## 当前产品结构
+当前产品映射形成：
 
 ~~~mermaid
 flowchart TB
-    SUB[Metadata / Context Substrate]
-    LIFE[Context Lifecycle]
-    REG[Agent Registry]
-    RUN[Agent Runtime]
-    EXT[External Execution]
+    CORE[DataHub Core<br/>Open Metadata / Context Substrate]
+    CLOUD[DataHub Cloud<br/>Context Lifecycle / Agent Operating Layer]
+    EXT[External Runtime<br/>Semantic / Policy / Warehouse / Tools]
 
-    SUB --> LIFE
-    SUB --> REG
-    LIFE --> RUN
-    REG --> RUN
-    RUN --> EXT
+    CORE --> CLOUD --> EXT
+    CORE --> EXT
 ~~~
 
-当前判断：
+### DataHub Core
 
-- Metadata substrate：成熟；
-- Context lifecycle：Public Beta；
-- Agent Registry：已落地；
-- Custom Agent runtime：Private Beta；
-- Agent runtime identity / delegation：仍在演进；
-- runtime data authorization：外部职责。
+已经能提供：
+
+- identity / graph / lineage；
+- business + technical metadata；
+- Context Documents；
+- API / SDK；
+- self-hosted MCP；
+- metadata mutation；
+- quality / incidents / contracts；
+- policies / Views。
+
+### DataHub Cloud
+
+进一步产品化：
+
+- Context Intelligence；
+- eval / proposal / SME review；
+- publication / activation；
+- Ask DataHub；
+- query-time search access control；
+- Agent Registry；
+- Custom Agents / Tasks / Decisions；
+- managed / scoped MCP；
+- AI audit；
+- advanced observability automation。
+
+## 下一阶段
+
+建议进入：
+
+> **Phase 3 — Concrete Case Studies**
+
+用真实 Agent 任务验证整个 architecture。
