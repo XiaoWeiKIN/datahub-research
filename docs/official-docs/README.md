@@ -8,6 +8,7 @@
 
 ## 已整理
 
+- [AI Agent Context：四层 Context 与失败模式](ai-agent-context.md)
 - [Context Platform — 官方材料中文学习笔记](context-platform.md)
 - [Context Graph / Knowledge Graph — 官方材料中文学习笔记](context-graph.md)
 - [Context Layer vs Semantic Layer — 官方材料中文学习笔记](semantic-layer.md)
