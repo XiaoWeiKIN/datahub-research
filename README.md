@@ -14,107 +14,94 @@
 3. **[03 — Context Layer vs Semantic Layer](docs/research/03-context-layer-vs-semantic-layer.md)**
 4. **[04 — Context Freshness & Provenance](docs/research/04-context-freshness-and-provenance.md)**
 5. **[05 — Agent Read / Write Context](docs/research/05-agent-read-write-context.md)**
-6. 下一篇：**Human + Agent Shared Truth Plane**
+6. **[06 — Human + Agent Shared Truth Plane](docs/research/06-human-agent-shared-truth-plane.md)**
+7. 下一篇：**Context Layer Reference Architecture**
 
-Supporting notes:
+## 当前总模型
 
-- [Context Layer](docs/context-layer.md)
-- [Design Philosophy](docs/design-philosophy.md)
-- [High-Level Architecture](docs/architecture.md)
-- [Official Docs Learning Notes](docs/official-docs/README.md)
-
-## 当前最重要的架构模型
-
-```mermaid
+~~~mermaid
 flowchart TB
-    REAL[Enterprise Reality]
-
-    subgraph TRUTH["Published Truth Plane"]
-        CTX[Validated Context Graph]
+    subgraph EP[Epistemic / Context Plane]
+        CG[Context Graph]
+        ASSERT[Assertions]
+        AUTH[Authority]
+        PROV[Provenance]
+        FRESH[Freshness]
+        PUB[Proposal / Publication / Reconciliation]
     end
 
-    subgraph PROP["Proposal Plane"]
-        CAND[Candidate Context]
-        EVAL[Evals / Evidence]
-        REVIEW[Human / Policy Authority]
+    subgraph SP[Semantic Execution Plane]
+        SM[Semantic Models]
+        COMP[Metric / Query Compiler]
     end
 
-    subgraph SEM["Semantic Execution Plane"]
-        MODEL[Semantic Models]
-        QUERY[Query Compiler]
+    subgraph PP[Identity / Policy Plane]
+        ID[Identity / Delegation]
+        PDP[Policy Decision]
+        PEP[Policy Enforcement]
     end
 
-    subgraph EXEC["Agent Execution Plane"]
+    subgraph AP[Agent Plane]
         AG[Agents]
         TASK[Tasks]
-        DEC[Decisions]
-        CE[Context Engineering]
+        MEM[Private / Task Memory]
     end
 
-    REAL --> CTX
-    CTX --> CE --> AG
+    subgraph DP[Data / Execution Plane]
+        WH[Warehouse / Lakehouse]
+        OPS[Operational Systems]
+    end
 
-    AG --> CAND
-    CAND --> EVAL --> REVIEW --> CTX
+    EP --> AG
+    AG --> SP
+    AG --> PP
+    SP --> PP
+    PP --> DP
+    DP --> EP
+    SP --> EP
+    AP --> EP
+~~~
 
-    MODEL <--> CTX
-    AG --> QUERY
-    MODEL --> QUERY
-    QUERY --> REAL
-
-    AG --> TASK
-    TASK --> DEC
-```
-
-当前研究逐渐形成几个原则：
+当前研究形成的核心原则：
 
 > **Semantic Layer makes meaning executable. Context Layer makes meaning situationally trustworthy.**
 
-> **Context Graph 的难点不是 storage，而是 dependency-aware maintenance。**
+> **Context Graph 的关键不只是 representation，而是 dependency-aware maintenance。**
 
 > **Freshness 不是 updated_at；Provenance 不是 audit log。**
 
 > **Agents propose. Evidence verifies. Authorities publish.**
 
-## Agent Write-back 的核心边界
+> **Shared truth means same governed substrate, not same access, same presentation, or one centralized author.**
 
-```mermaid
-flowchart LR
-    A[Agent]
-    P[Proposal]
-    E[Evidence]
-    AUTH[Authority]
-    T[Published Context]
+> **Context Platform 更接近 Enterprise AI 的 Epistemic Control Plane，而不是完整 AI Control Plane。**
 
-    A --> P
-    E --> P
-    P --> AUTH --> T
-```
+## 为什么叫 Epistemic Control Plane？
 
-Agent 可以：
+它主要管理：
 
-- observe；
-- infer；
-- annotate；
-- propose；
-- execute bounded writes。
+- 系统知道什么；
+- 什么定义适用；
+- 哪些 context current；
+- 为什么相信；
+- 谁拥有 authority；
+- 哪些 assertions 已发布；
+- Human / Agent 消费的是哪个版本。
 
-但 machine-generated context 不应该因为被写入 graph 就自动升级为企业 truth。
+它不应该取代 warehouse / data plane、semantic execution、IAM、runtime policy enforcement、agent runtime 或 model serving。
 
 ## 研究方法
 
-官方文档采用：
-
 **原文链接 → 中文释义 → 厂商主张 → 架构拆解 → 外部对照 → 我们的工作定义 → 开放问题**
 
-我们不以源码实现为目标，而关注：
+关注：
 
 - architectural responsibility
 - system boundaries
 - information model
-- trust / authority model
+- authority / trust model
 - temporal model
 - provenance
-- lifecycle
+- reconciliation
 - AI / Agent security
 - human-machine governance
