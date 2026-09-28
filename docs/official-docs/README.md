@@ -8,6 +8,7 @@
 
 ## 已整理
 
+- **[Metrics & Semantic Models — 官方材料释义与证据表](metrics-and-semantic-models.md)** — 2026-09-28，配套 Metrics 专题研究，区分发布、Beta、roadmap 与尚未实测的能力。
 - [AI Agent Context：四层 Context 与失败模式](ai-agent-context.md)
 - [Context Platform — 官方材料中文学习笔记](context-platform.md)
 - [Context Graph / Knowledge Graph — 官方材料中文学习笔记](context-graph.md)

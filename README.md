@@ -5,6 +5,13 @@
 > DataHub: https://datahub.com/  
 > Documentation: https://docs.datahub.com/
 
+## 最新专题 — Metrics & Semantic Models
+
+- **[02 — DataHub 如何管理业务语义，而不成为指标计算引擎](docs/research/02-metrics-and-semantic-models.md)**
+- [官方材料释义与证据表](docs/official-docs/metrics-and-semantic-models.md)
+
+核查日期：2026-09-28。研究定义目录与计算引擎的边界、语义模型与血缘、OSI / Apache Ossie、跨平台身份，以及 Agent 消费的现状与目标架构。此专题沿用对话编号 02，保留下面原有主线与案例。
+
 ## Phase 1 — Architecture & Philosophy
 
 1. [Why Context Layer?](docs/research/01-why-context-layer.md)

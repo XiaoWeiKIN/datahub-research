@@ -2,6 +2,13 @@
 
 这里保存高层研究笔记。目标不是复述 DataHub 功能，而是理解它背后的架构命题，并判断这些命题在 AI / Agent 时代是否成立。
 
+## 专题补充
+
+- **[02 — Metrics & Semantic Models：DataHub 如何管理业务语义，而不成为指标计算引擎](02-metrics-and-semantic-models.md)** — 2026-09-28 核查。区分定义与计算、语义容器与血缘、原生采集与 SDK、OSI/Ossie 交换与执行等价，以及 Agent 消费的现状与目标架构。
+- [Metrics & Semantic Models — 官方材料释义与证据表](../official-docs/metrics-and-semantic-models.md)
+
+专题 02 沿用对应对话的编号，与下面已有主线编号并行，不替换原主线 02。
+
 ## 主线
 
 1. [Why Context Layer?：从 Data Catalog 到 AI Context Infrastructure](01-why-context-layer.md)
