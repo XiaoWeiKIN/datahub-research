@@ -23,12 +23,18 @@
 
 ## Start Here
 
-- **[01 — Why Context Layer?](docs/research/01-why-context-layer.md)** — 第一篇正式研究笔记
+1. **[01 — Why Context Layer?](docs/research/01-why-context-layer.md)**
+2. **[02 — Context Graph vs Knowledge Graph](docs/research/02-context-graph-vs-knowledge-graph.md)**
+3. 下一篇：**Context Layer vs Semantic Layer**
+
+Supporting notes:
+
 - [Context Layer](docs/context-layer.md)
 - [Design Philosophy](docs/design-philosophy.md)
 - [High-Level Architecture](docs/architecture.md)
 - [Official Docs Learning Notes](docs/official-docs/README.md)
 - [Context Platform 官方材料中文学习笔记](docs/official-docs/context-platform.md)
+- [Context Graph / Knowledge Graph 官方材料中文学习笔记](docs/official-docs/context-graph.md)
 
 ## 研究视角
 
@@ -48,11 +54,25 @@ flowchart TB
 
 我们研究的重点是中间这一层为什么存在、应该包含什么，以及它如何成为 AI 系统的长期基础设施。
 
+## 当前一个重要判断
+
+```mermaid
+flowchart TB
+    KG[Knowledge Graph Tradition<br/>ontology / semantics / reasoning]
+    AM[Active Metadata Tradition<br/>lineage / quality / usage / freshness]
+    CG[Context Graph<br/>operational enterprise knowledge]
+    AI[AI / Agent Infrastructure]
+
+    KG --> CG
+    AM --> CG
+    CG --> AI
+```
+
+当前研究认为，Context Graph 的价值不在于发明新的 graph model，而在于让 semantic graph 与实时 enterprise operations 汇合。
+
 ## 三条学习主线
 
 ### 1. Design Philosophy
-
-从高层理解 DataHub 的设计选择：
 
 - metadata as infrastructure
 - graph-first relationships
@@ -78,13 +98,15 @@ flowchart TB
 
 ### 3. AI Context Layer
 
-重点研究 AI 时代 Context Layer 的必要性，以及 DataHub 的答案：
+重点研究：
 
 - Context Management vs Context Engineering
-- Context Graph
+- Context Graph vs Knowledge Graph
+- Context Layer vs Semantic Layer
 - Technical / Operational / Business / Organizational Context
 - freshness
 - provenance
+- authority
 - trust
 - MCP & Agent Context
 - read/write context
@@ -93,25 +115,10 @@ flowchart TB
 
 ## 官方文档学习
 
-官方文档会做中文学习笔记，但采用：
+官方文档采用：
 
 **原文链接 → 中文释义 → 作者主张 → 我的理解 → 架构含义 → 开放问题**
 
 而不是逐字镜像翻译。
 
 → [Official Docs Notes](docs/official-docs/README.md)
-
-## 当前研究假设
-
-```mermaid
-flowchart LR
-    CATALOG[Data Catalog]
-    META[Metadata Platform]
-    GRAPH[Metadata Graph]
-    CONTEXT[Context Graph / Context Layer]
-    AGENT[AI / Agent Infrastructure]
-
-    CATALOG --> META --> GRAPH --> CONTEXT --> AGENT
-```
-
-这不是预设结论，而是本仓库准备验证和修正的一条演化假设。
