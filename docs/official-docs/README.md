@@ -14,6 +14,10 @@
 4. 对 AI Context Layer 有什么意义？
 5. 哪些内容是产品叙事，哪些可以抽象成通用架构原则？
 
+## 已整理
+
+- [Context Platform — 官方材料中文学习笔记](context-platform.md)
+
 ## 优先阅读顺序
 
 ### A. DataHub foundation
