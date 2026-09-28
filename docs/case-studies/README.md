@@ -5,41 +5,65 @@
 - **Phase 1:** Context Layer 应该是什么？
 - **Phase 2:** DataHub 今天实现到了哪里？
 
-Phase 3 不再扩概念，而是用真实类型的 Agent 任务验证整个架构。
+Phase 3 用真实类型的 Agent 任务验证整个架构。
 
 ## Case Studies
 
 1. [Analytics Agent — Enterprise Customer Net Revenue](01-analytics-agent-net-revenue.md)
+2. [Schema Change Incident Agent](02-schema-change-incident-agent.md)
 
-## 方法
+## Coverage
 
-每个 case 都区分：
+~~~mermaid
+flowchart LR
+    C1[Case 01<br/>Read-heavy Analytics]
+    C2[Case 02<br/>Operational Repair]
+    C3[Next<br/>Governance / PII]
 
-- **Synthetic Fixture**：为了推演而设定的业务定义 / 表 / 指标，不声称来自真实企业；
-- **DataHub Current Capability**：截至快照日期有官方资料支持的能力；
-- **Reference Architecture Ideal**：我们认为 production Context Layer 更理想的设计；
-- **Gap**：DataHub 当前产品与 Reference Architecture 的差距。
+    C1 --> C2 --> C3
+~~~
 
-每个 case 尽量完整走过：
+### Case 01
+
+验证：
 
 ~~~text
 Intent
 -> Context
--> Authority
--> Freshness / Quality
 -> Semantic
 -> Policy
--> Data Execution
+-> Query
 -> Evidence
 -> Answer
--> Write-back
--> Audit
 ~~~
 
-## 目标
+### Case 02
 
-Case Study 不追求证明“DataHub 能自动解决一切”。
+验证：
 
-真正要检验的是：
+~~~text
+Incident
+-> Fresh Context
+-> Lineage Blast Radius
+-> Ownership
+-> Repair Plan
+-> Human Decision
+-> PR / CI
+-> Independent Verification
+-> Context Write-back
+~~~
 
-> **Context / Semantic / Policy / Data / Agent 五个 Plane 的边界是否足以解释一个 production Agent 的正确性。**
+## 方法
+
+每个 case 区分：
+
+- **Synthetic Fixture**
+- **DataHub Current Capability**
+- **Reference Architecture Ideal**
+- **Gap / Failure Test**
+
+## 下一 Case
+
+3. **Governance / PII Agent**
+
+重点验证 Context Visibility 与 Runtime Authorization 的边界。
