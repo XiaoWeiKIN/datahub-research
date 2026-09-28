@@ -15,28 +15,37 @@
 4. **[04 — Context Freshness & Provenance](docs/research/04-context-freshness-and-provenance.md)**
 5. **[05 — Agent Read / Write Context](docs/research/05-agent-read-write-context.md)**
 6. **[06 — Human + Agent Shared Truth Plane](docs/research/06-human-agent-shared-truth-plane.md)**
-7. 下一篇：**Context Layer Reference Architecture**
+7. **[07 — Context Layer Reference Architecture](docs/research/07-context-layer-reference-architecture.md)**
+8. 下一篇：**Context Platform Failure Modes**
 
-## 当前总模型
+## 当前参考架构
 
 ~~~mermaid
 flowchart TB
-    subgraph EP[Epistemic / Context Plane]
-        CG[Context Graph]
-        ASSERT[Assertions]
-        AUTH[Authority]
-        PROV[Provenance]
-        FRESH[Freshness]
-        PUB[Proposal / Publication / Reconciliation]
+    subgraph DP[Data / Execution Plane]
+        WH[Warehouse / Lakehouse]
+        OPS[Operational Systems]
+        DOC[Docs / SaaS / Repos]
     end
 
-    subgraph SP[Semantic Execution Plane]
+    subgraph EP[Epistemic / Context Plane]
+        OBS[Observation]
+        ID[Identity]
+        ASSERT[Assertions]
+        CG[Context Graph]
+        TRUST[Provenance / Freshness / Authority]
+        REC[Reconciliation / Invalidation]
+        PUB[Proposal / Publication]
+        RET[Scoped Retrieval]
+    end
+
+    subgraph SP[Semantic Plane]
         SM[Semantic Models]
         COMP[Metric / Query Compiler]
     end
 
     subgraph PP[Identity / Policy Plane]
-        ID[Identity / Delegation]
+        PRI[Principal / Delegation]
         PDP[Policy Decision]
         PEP[Policy Enforcement]
     end
@@ -44,25 +53,22 @@ flowchart TB
     subgraph AP[Agent Plane]
         AG[Agents]
         TASK[Tasks]
-        MEM[Private / Task Memory]
+        MEM[Private Memory]
     end
 
-    subgraph DP[Data / Execution Plane]
-        WH[Warehouse / Lakehouse]
-        OPS[Operational Systems]
-    end
+    DP --> OBS --> ID --> ASSERT --> CG
+    CG --> TRUST --> REC --> PUB --> RET
+    RET --> AG
 
-    EP --> AG
-    AG --> SP
-    AG --> PP
-    SP --> PP
-    PP --> DP
-    DP --> EP
-    SP --> EP
-    AP --> EP
+    SM <--> CG
+    AG --> COMP --> PDP
+    PRI --> PDP
+    PDP --> PEP --> DP
+
+    AP --> ASSERT
 ~~~
 
-当前研究形成的核心原则：
+## 当前研究形成的核心原则
 
 > **Semantic Layer makes meaning executable. Context Layer makes meaning situationally trustworthy.**
 
@@ -76,19 +82,34 @@ flowchart TB
 
 > **Context Platform 更接近 Enterprise AI 的 Epistemic Control Plane，而不是完整 AI Control Plane。**
 
-## 为什么叫 Epistemic Control Plane？
+> **Context informs policy; policy governs execution.**
 
-它主要管理：
+## Context Layer 的核心数据模型
 
-- 系统知道什么；
-- 什么定义适用；
-- 哪些 context current；
-- 为什么相信；
-- 谁拥有 authority；
-- 哪些 assertions 已发布；
-- Human / Agent 消费的是哪个版本。
+重要 context 不应只是 property，而应当是带 trust metadata 的 assertion：
 
-它不应该取代 warehouse / data plane、semantic execution、IAM、runtime policy enforcement、agent runtime 或 model serving。
+~~~text
+ContextAssertion
+├── subject / predicate / value
+├── scope / domain
+├── source / evidence
+├── authority
+├── provenance
+├── valid time / observed time
+├── epistemic state
+├── publication state
+└── dependencies
+~~~
+
+## 五个 Plane 的边界
+
+| Plane | 主要问题 |
+|---|---|
+| Context / Epistemic | 知道什么？为什么相信？当前是否适用？ |
+| Semantic | 怎么算？ |
+| Identity / Policy | 当前主体是否允许？ |
+| Data / Execution | 数据在哪里、如何真实执行？ |
+| Agent | 如何解释、规划、调用工具和行动？ |
 
 ## 研究方法
 
@@ -103,5 +124,6 @@ flowchart TB
 - temporal model
 - provenance
 - reconciliation
+- SLO / failure modes
 - AI / Agent security
 - human-machine governance
