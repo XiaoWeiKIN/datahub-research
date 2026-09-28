@@ -23,43 +23,100 @@
 - [01 — Reference Architecture → DataHub Current Product](docs/product-mapping/01-reference-architecture-to-datahub.md)
 - [02 — Metadata Model as Context Substrate](docs/product-mapping/02-metadata-model-as-context-substrate.md)
 - [03 — Context Lifecycle Product Mapping](docs/product-mapping/03-context-lifecycle.md)
-- **[04 — Agent Governance Product Mapping](docs/product-mapping/04-agent-governance.md)**
-- 下一篇：**OSS vs Cloud Context Architecture**
+- [04 — Agent Governance Product Mapping](docs/product-mapping/04-agent-governance.md)
+- **[05 — OSS vs Cloud Context Architecture](docs/product-mapping/05-oss-vs-cloud-context-architecture.md)**
 
 当前快照：**2026-09-28**
 
-## Agent Governance 当前模型
+## DataHub 当前架构边界
 
 ~~~mermaid
 flowchart TB
-    REG[Agent Registry<br/>Identity · Ownership · Version · Lineage]
-    SCOPE[Context Scope<br/>View / Scoped MCP]
-    CAP[Capability Scope<br/>Tools / Plugins]
-    ID[Runtime Identity<br/>OAuth / Creator / Service Account]
-    RUN[Tasks / Decisions]
-    AUDIT[Run History / Tool Trace]
+    subgraph CORE[DataHub Core — Open Context Substrate]
+        MODEL[Metadata Standard]
+        GRAPH[Graph / Lineage]
+        DOC[Context Documents]
+        GOV[Governance Metadata]
+        QUAL[Quality / Incidents / Contracts]
+        API[API / SDK]
+        MCP[Self-hosted MCP]
+    end
 
-    REG --> RUN
-    SCOPE --> RUN
-    CAP --> RUN
-    ID --> RUN
-    RUN --> AUDIT
+    subgraph CLOUD[DataHub Cloud — Context Operating Layer]
+        INTEL[Context Intelligence]
+        EVAL[Eval / Proposal / SME]
+        ASK[Ask DataHub]
+        ACL[Search-time Access Control]
+        REG[Agent Registry]
+        AG[Agents / Tasks / Decisions]
+        MMCP[Managed / Scoped MCP]
+        AUTO[AI Audit / Advanced Automation]
+    end
+
+    subgraph EXT[External Runtime]
+        SEM[Semantic Runtime]
+        POLICY[Runtime Authorization]
+        DATA[Warehouse / SaaS / Tools]
+    end
+
+    CORE --> CLOUD
+    CLOUD --> EXT
+    CORE --> EXT
 ~~~
 
-当前最重要的 Product Mapping 结论：
+## Phase 2 核心结论
 
-> **DataHub 的 Agent governance graph 已经比 custom Agent runtime 本身成熟。**
+> **DataHub Core 已经是一个很强的 Open Metadata / Context Substrate。**
 
-Agent Registry 已经把 Agent / Skill / Tool / MCP Server 放进 metadata/lineage graph，并继承 ownership、versioning、classification propagation 与 incident governance。citeturn451627view0
+它并不缺：
 
-Custom Agents 当前仍是 DataHub Cloud Private Beta，可配置 instructions、DataHub tools、external AI Plugins 和 View scope，并通过 Tasks / Decisions 执行工作流。citeturn263058view0
+- graph；
+- lineage；
+- documents；
+- APIs；
+- MCP；
+- governance metadata；
+- quality primitives。
 
-当前一个重要限制是：Task 以创建 Task 的用户权限运行；官方计划未来支持指定 service account。citeturn263058view1
+DataHub Cloud 真正增加的是：
 
-因此：
+> **Context lifecycle + Agent governance + managed security / automation / operating model。**
 
-> **Agent identity、Context scope、Tool scope、Runtime principal 是四个不同维度，不能混成一个“Agent 权限”。**
+因此不能简单理解：
 
-## 研究方法
+~~~text
+OSS = Catalog
+Cloud = Context Platform
+~~~
 
-**官方证据 → 当前能力 → Reference Architecture responsibility → Gap / boundary**
+更准确：
+
+~~~text
+Core = Context Substrate
+Cloud = Productized Context Operating Layer
+~~~
+
+## Phase 3
+
+下一阶段停止继续拆 feature。
+
+进入：
+
+> **Concrete Case Studies**
+
+第一篇建议：
+
+**Analytics Agent：过去 90 天 Enterprise Customer Net Revenue 是多少？同比如何？为什么应该相信这个数字？**
+
+用一个任务贯穿：
+
+~~~text
+Intent
+-> Context
+-> Semantic
+-> Policy
+-> Data
+-> Evidence
+-> Answer
+-> Audit
+~~~
