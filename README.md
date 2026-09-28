@@ -2,8 +2,6 @@
 
 研究 DataHub 的**架构思想、设计哲学，以及它如何从 Metadata Platform 演化为 AI 时代的 Context Layer / Context Platform**。
 
-官方文档翻译是学习手段，不是研究终点。
-
 > DataHub: https://datahub.com/  
 > Documentation: https://docs.datahub.com/
 
@@ -24,46 +22,44 @@
 - [Phase 2 Index](docs/product-mapping/README.md)
 - [01 — Reference Architecture → DataHub Current Product](docs/product-mapping/01-reference-architecture-to-datahub.md)
 - [02 — Metadata Model as Context Substrate](docs/product-mapping/02-metadata-model-as-context-substrate.md)
-- **[03 — Context Lifecycle Product Mapping](docs/product-mapping/03-context-lifecycle.md)**
-- 下一篇：**Agent Governance Product Mapping**
+- [03 — Context Lifecycle Product Mapping](docs/product-mapping/03-context-lifecycle.md)
+- **[04 — Agent Governance Product Mapping](docs/product-mapping/04-agent-governance.md)**
+- 下一篇：**OSS vs Cloud Context Architecture**
 
-当前快照时间：**2026-09-28**
+当前快照：**2026-09-28**
 
-## DataHub Context Lifecycle
+## Agent Governance 当前模型
 
 ~~~mermaid
-flowchart LR
-    SRC[Metadata / Query History / BI]
-    GEN[Context Generation]
-    DOC[Context Document]
-    PROP[Proposal]
-    EVAL[Eval]
-    SME[SME Review]
-    PUB[Publish]
-    MCP[MCP / Search]
-    AG[Agent]
+flowchart TB
+    REG[Agent Registry<br/>Identity · Ownership · Version · Lineage]
+    SCOPE[Context Scope<br/>View / Scoped MCP]
+    CAP[Capability Scope<br/>Tools / Plugins]
+    ID[Runtime Identity<br/>OAuth / Creator / Service Account]
+    RUN[Tasks / Decisions]
+    AUDIT[Run History / Tool Trace]
 
-    SRC --> GEN --> DOC --> PROP --> EVAL --> SME --> PUB --> MCP --> AG
+    REG --> RUN
+    SCOPE --> RUN
+    CAP --> RUN
+    ID --> RUN
+    RUN --> AUDIT
 ~~~
 
-当前官方文档确认：
+当前最重要的 Product Mapping 结论：
 
-- Context Platform 是 Public Beta；
-- Auto-publish 默认关闭；
-- generated context 默认 unpublished；
-- human-edited context 在 full refresh 中保留，并优先于 agent-generated metadata；
-- 只有 published context 对 Agent 和 search 可见；
-- reviewer 可以运行 eval 和 Ask DataHub preview；
-- 官方建议从单 domain / 小规模 context 开始渐进发布。
+> **DataHub 的 Agent governance graph 已经比 custom Agent runtime 本身成熟。**
 
-这意味着 DataHub 已经有真实的：
+Agent Registry 已经把 Agent / Skill / Tool / MCP Server 放进 metadata/lineage graph，并继承 ownership、versioning、classification propagation 与 incident governance。citeturn451627view0
 
-> **Generation Plane -> Governance Plane -> Activation Plane**
+Custom Agents 当前仍是 DataHub Cloud Private Beta，可配置 instructions、DataHub tools、external AI Plugins 和 View scope，并通过 Tasks / Decisions 执行工作流。citeturn263058view0
 
-但当前 lifecycle 的主要对象仍然是 **Context Document**，不是我们 Reference Architecture 中更通用的 assertion-level lifecycle。
+当前一个重要限制是：Task 以创建 Task 的用户权限运行；官方计划未来支持指定 service account。citeturn263058view1
 
-## 当前 Product Mapping 主结论
+因此：
 
-> **DataHub Metadata Model 是优秀的 Context Substrate；Context Hub 已经提供一个完整度较高的 Document-level Governed Context Lifecycle。**
+> **Agent identity、Context scope、Tool scope、Runtime principal 是四个不同维度，不能混成一个“Agent 权限”。**
 
-下一步研究 Agent 本身如何进入这个治理图。
+## 研究方法
+
+**官方证据 → 当前能力 → Reference Architecture responsibility → Gap / boundary**
