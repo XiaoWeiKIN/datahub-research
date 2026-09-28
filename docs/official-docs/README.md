@@ -17,6 +17,7 @@
 ## 已整理
 
 - [Context Platform — 官方材料中文学习笔记](context-platform.md)
+- [Context Graph / Knowledge Graph — 官方材料中文学习笔记](context-graph.md)
 
 ## 优先阅读顺序
 
