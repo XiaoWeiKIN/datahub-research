@@ -18,6 +18,7 @@
 
 - [Context Platform — 官方材料中文学习笔记](context-platform.md)
 - [Context Graph / Knowledge Graph — 官方材料中文学习笔记](context-graph.md)
+- [Context Layer vs Semantic Layer — 官方材料中文学习笔记](semantic-layer.md)
 
 ## 优先阅读顺序
 
@@ -43,8 +44,6 @@
 - semantic retrieval
 
 ### D. Comparative study
-
-读完官方材料后，不直接接受产品定义，而是比较：
 
 - Context Layer vs Semantic Layer
 - Context Graph vs Knowledge Graph
