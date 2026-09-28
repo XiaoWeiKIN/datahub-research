@@ -21,6 +21,15 @@
 8. 人与 Agent 是否应该消费同一个 governed context source of truth？
 9. AI Agent 能否反向写入、丰富 Context Layer？这会带来什么治理问题？
 
+## Start Here
+
+- **[01 — Why Context Layer?](docs/research/01-why-context-layer.md)** — 第一篇正式研究笔记
+- [Context Layer](docs/context-layer.md)
+- [Design Philosophy](docs/design-philosophy.md)
+- [High-Level Architecture](docs/architecture.md)
+- [Official Docs Learning Notes](docs/official-docs/README.md)
+- [Context Platform 官方材料中文学习笔记](docs/official-docs/context-platform.md)
+
 ## 研究视角
 
 ```mermaid
@@ -30,7 +39,7 @@ flowchart TB
     H[Humans]
     A[AI Agents]
 
-    DS -->|technical / operational / business context| CL
+    DS -->|technical / operational / business / organizational context| CL
     CL -->|search / discovery / governance| H
     CL -->|MCP / API / semantic retrieval| A
     H -->|curation / validation| CL
@@ -73,7 +82,7 @@ flowchart TB
 
 - Context Management vs Context Engineering
 - Context Graph
-- Semantic / Technical / Operational / Business Context
+- Technical / Operational / Business / Organizational Context
 - freshness
 - provenance
 - trust
@@ -98,8 +107,8 @@ flowchart TB
 flowchart LR
     CATALOG[Data Catalog]
     META[Metadata Platform]
-    GRAPH[Metadata / Context Graph]
-    CONTEXT[Enterprise Context Layer]
+    GRAPH[Metadata Graph]
+    CONTEXT[Context Graph / Context Layer]
     AGENT[AI / Agent Infrastructure]
 
     CATALOG --> META --> GRAPH --> CONTEXT --> AGENT
