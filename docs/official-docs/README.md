@@ -14,6 +14,7 @@
 - [Continuous Context / Freshness / Provenance — 官方材料中文学习笔记](continuous-context.md)
 - [Agent Read / Write Context — 官方材料中文学习笔记](agent-read-write.md)
 - [Human + Agent Shared Context — 官方材料中文学习笔记](shared-truth-plane.md)
+- [Context Platform Failure Modes — 官方材料学习笔记](failure-modes.md)
 
 ## 学习主线
 
@@ -26,8 +27,8 @@ Context Intelligence / Context Hub / proposals / evals / publication / continuou
 ### Agent lifecycle
 MCP / Agents / Tasks / Decisions / Agent Registry / scoped context / write-back
 
-### Architecture boundaries
-Context vs Semantic / Knowledge Graph / Policy-IAM / Context Engineering / shared truth
+### Architecture boundaries & reliability
+Context vs Semantic / Knowledge Graph / Policy-IAM / shared truth / failure modes / eventual consistency
 
 ## Note Template
 
