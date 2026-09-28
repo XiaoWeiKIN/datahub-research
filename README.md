@@ -29,62 +29,42 @@
 ## Phase 3 — Concrete Case Studies
 
 - [Phase 3 Index](docs/case-studies/README.md)
-- **[Case 01 — Analytics Agent: Enterprise Customer Net Revenue](docs/case-studies/01-analytics-agent-net-revenue.md)**
+- [Case 01 — Analytics Agent: Enterprise Customer Net Revenue](docs/case-studies/01-analytics-agent-net-revenue.md)
+- **[Case 02 — Schema Change Incident Agent](docs/case-studies/02-schema-change-incident-agent.md)**
+- 下一篇：**Governance / PII Agent**
 
-Case 01 使用合成企业数据定义，不代表任何真实公司。
-
-它验证：
+## Case 02 Architecture
 
 ~~~mermaid
 flowchart LR
-    INTENT[Intent]
-    CTX[Context / Authority / Freshness]
-    SEM[Semantic]
-    POLICY[Policy]
-    DATA[Data Execution]
-    EVIDENCE[Evidence]
-    ANSWER[Answer]
-    AUDIT[Audit]
+    CHANGE[Schema Change]
+    CTX[Fresh Context]
+    LINEAGE[Column-level Lineage]
+    IMPACT[Blast Radius]
+    OWNER[Owner / Repo]
+    PLAN[Repair Plan]
+    DEC[Human Decision]
+    PR[PR / CI]
+    VERIFY[Independent Verification]
+    WRITE[Incident / Context Write-back]
 
-    INTENT --> CTX --> SEM --> POLICY --> DATA --> EVIDENCE --> ANSWER --> AUDIT
+    CHANGE --> CTX --> LINEAGE --> IMPACT --> OWNER --> PLAN --> DEC --> PR --> VERIFY --> WRITE
 ~~~
 
-## Case 01 的核心判断
+DataHub 2026 Agent Hackathon 已经出现多个类似生产模式：column-level lineage 算 blast radius、修 dbt/Airflow、开 PR、通过 evidence gate、用另一 API read-back 验证，再把 tags、incident、postmortem、lineage/docs 写回 DataHub。citeturn121928search0
 
-对于：
+Case 02 验证的新原则：
 
-> “过去 90 天 Enterprise Customer Net Revenue 是多少？同比如何？为什么我应该相信这个数字？”
+> **An agent cannot prove its own success by reporting success.**
 
-正确 Agent 不能从 schema 直接跳到 SQL。
+> **Operational action must end in independent verification and governed shared context, not private Agent memory.**
 
-它至少要先解决：
+> **Lineage reachability tells you what may be affected; it does not by itself tell you what must be changed.**
 
-- Enterprise Customer 的定义；
-- Net Revenue 的定义；
-- authority / domain；
-- join / query pattern；
-- freshness / quality；
-- runtime authorization。
+## Next
 
-DataHub 当前 Analytics Agent 的 reference implementation 也采用：
+Case 03 将直接测试：
 
-> context enrichment before SQL generation
+> **Context visibility != runtime authorization**
 
-并通过 DataHub MCP / Agent Context Kit 读取 schema、glossary、lineage、quality、usage 等 context，再生成 SQL。citeturn926690search1
-
-DataHub 当前 Context Activation 还明确建议 analytics/text-to-SQL Agent 使用 `datahub-sql-workflow` skill，在回答自然语言业务问题时先搜索 published DataHub context。citeturn926690search0
-
-## 下一 Case
-
-**Schema Change Incident Agent**
-
-验证 read-heavy analytics 之外的：
-
-~~~text
-Lineage
--> Incident
--> GitHub / Tool Action
--> Human Decision
--> Verification
--> Context Write-back
-~~~
+用 PII / governance propagation / Agent lineage 场景检验 Policy Plane。
