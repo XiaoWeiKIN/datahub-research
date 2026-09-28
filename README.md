@@ -12,7 +12,8 @@
 1. **[01 — Why Context Layer?](docs/research/01-why-context-layer.md)**
 2. **[02 — Context Graph vs Knowledge Graph](docs/research/02-context-graph-vs-knowledge-graph.md)**
 3. **[03 — Context Layer vs Semantic Layer](docs/research/03-context-layer-vs-semantic-layer.md)**
-4. 下一篇：**Context Freshness & Provenance**
+4. **[04 — Context Freshness & Provenance](docs/research/04-context-freshness-and-provenance.md)**
+5. 下一篇：**Agent Read / Write Context**
 
 Supporting notes:
 
@@ -27,31 +28,27 @@ Supporting notes:
 2. Metadata Platform 为什么有机会演化成 Context Platform？
 3. Context Graph 与 Knowledge Graph 的真实差异在哪里？
 4. Context Layer 与 Semantic Layer 应该如何分工？
-5. 为什么 freshness、provenance、authority 会成为 AI 基础设施的一等属性？
-6. Human 与 Agent 是否应该共享同一个 governed truth plane？
-7. Agent write-back context 后如何维持可信度？
+5. Context 如何知道自己已经 stale / invalid？
+6. Provenance 如何从 source evidence 延伸到 Agent decision？
+7. Human 与 Agent 是否应该共享同一个 governed truth plane？
+8. Agent write-back context 后如何避免污染 truth？
 
 ## 当前架构模型
 
 ```mermaid
 flowchart TB
-    subgraph DATA["Data Plane"]
-        WH[Warehouse / Lakehouse]
-        OPS[Operational Systems]
+    REAL[Enterprise Reality]
+
+    subgraph CTX["Context Plane"]
+        OBS[Observe / Ingest]
+        CG[Context Graph]
+        DEP[Dependency + Provenance]
+        TRUST[Freshness / Authority / Epistemic State]
     end
 
     subgraph SEM["Semantic Execution Plane"]
         SM[Semantic Models]
-        MET[Metrics]
-        QC[Query Compiler]
-    end
-
-    subgraph CTX["Context Plane"]
-        CG[Context Graph]
-        META[Metadata / Lineage]
-        KNOW[Business Knowledge]
-        STATE[Quality / Freshness / Incidents]
-        GOV[Governance / Provenance / Authority]
+        QC[Metric / Query Compiler]
     end
 
     subgraph AGENT["Agent Plane"]
@@ -59,26 +56,25 @@ flowchart TB
         A[AI Agents]
     end
 
-    WH --> QC
-    SM --> QC
-    MET --> QC
-
+    REAL --> OBS --> CG
+    CG --> DEP --> TRUST
     SM <--> CG
-    MET <--> CG
 
-    WH --> META --> CG
-    OPS --> STATE --> CG
-    KNOW --> CG
-    GOV --> CG
-
-    CG --> CE --> A
+    TRUST --> CE --> A
     A --> QC
-    QC --> A
+    QC --> REAL
+
+    REAL -.change events.-> OBS
+    DEP -.invalidation.-> CG
 ```
 
-当前研究的核心判断：
+当前研究的几个核心判断：
 
 > **Semantic Layer makes meaning executable. Context Layer makes meaning situationally trustworthy.**
+
+> **Context Graph 的关键不只是 representation，而是 dependency-aware maintenance。**
+
+> **Freshness 不是 updated_at；Provenance 不是 audit log。**
 
 ## 研究方法
 
@@ -92,5 +88,7 @@ flowchart TB
 - system boundaries
 - information model
 - trust model
+- temporal model
+- provenance
 - lifecycle
 - AI / Agent implications
