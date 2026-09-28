@@ -1,66 +1,108 @@
 # DataHub Research
 
-面向 DataHub 的系统化学习、官方文档中文学习笔记与技术实验仓库。
+研究 DataHub 的**架构思想、设计哲学，以及它如何从 Metadata Platform 演化为 AI 时代的 Context Layer / Context Platform**。
 
-> 官方站点：https://datahub.com/
-> 官方文档：https://docs.datahub.com/
+官方文档翻译是学习手段，不是研究终点。
 
-## 目标
+> DataHub: https://datahub.com/  
+> Documentation: https://docs.datahub.com/
 
-这个仓库不做官方文档的镜像。学习材料采用：
+## 核心研究问题
 
-**官方文档 → 中文释义/摘要 → 概念拆解 → 问题 → 实验验证 → 结论**
+这个仓库重点回答：
 
-重点回答：
+1. 为什么企业需要一个独立于数据存储和 AI Agent 的 **Context Layer**？
+2. DataHub 为什么从 Data Catalog / Metadata Platform 走向 Context Platform？
+3. 为什么选择 **Graph** 来组织 metadata、business knowledge、lineage、ownership、quality 与 provenance？
+4. 为什么 context 必须是 continuously synchronized，而不是静态文档或一次性 RAG index？
+5. DataHub 如何处理 **meaning、trust、freshness、provenance、governance**？
+6. Context Layer 与 Semantic Layer、Knowledge Graph、Data Catalog、RAG、Agent Memory 分别是什么关系？
+7. MCP 在这套架构里是什么：Context Layer 本身，还是 Context Activation / access protocol？
+8. 人与 Agent 是否应该消费同一个 governed context source of truth？
+9. AI Agent 能否反向写入、丰富 Context Layer？这会带来什么治理问题？
 
-1. DataHub 解决什么问题？
-2. Metadata Graph 的核心抽象是什么？
-3. Metadata Ingestion 如何工作？
-4. Dataset、URN、Aspect、MCP 等概念如何组织？
-5. Lineage、Search、Governance、Data Quality 如何实现？
-6. Python SDK / API 如何使用？
-7. DataHub Core 与 DataHub Cloud 有什么边界？
-8. Context / Agents / MCP 等新能力如何与 metadata graph 结合？
+## 研究视角
 
-## 学习入口
+```mermaid
+flowchart TB
+    DS[Enterprise Data & Knowledge Systems]
+    CL[Context Layer / Context Graph]
+    H[Humans]
+    A[AI Agents]
 
-- [学习路线](docs/learning-path.md)
-- [官方文档学习索引](docs/official-docs/README.md)
-- [术语表](docs/glossary.md)
-- [01 - What is DataHub?](docs/official-docs/01-what-is-datahub.md)
-- [问题清单](notes/questions.md)
-- [实验目录](experiments/README.md)
-
-## 目录
-
-```text
-.
-├── README.md
-├── docs/
-│   ├── learning-path.md
-│   ├── glossary.md
-│   └── official-docs/
-│       ├── README.md
-│       └── 01-what-is-datahub.md
-├── notes/
-│   └── questions.md
-└── experiments/
-    └── README.md
+    DS -->|technical / operational / business context| CL
+    CL -->|search / discovery / governance| H
+    CL -->|MCP / API / semantic retrieval| A
+    H -->|curation / validation| CL
+    A -->|proposals / enrichment / actions| CL
 ```
 
-## 笔记原则
+我们研究的重点是中间这一层为什么存在、应该包含什么，以及它如何成为 AI 系统的长期基础设施。
 
-每篇文档尽量包含：
+## 三条学习主线
 
-- Source：官方原文链接
-- Status：待学习 / 学习中 / 已完成 / 待验证
-- 中文释义：用自己的语言解释原文
-- Key Concepts：关键概念
-- Mental Model：概念之间的关系
-- Questions：阅读后仍未解决的问题
-- Verification：需要通过源码或实验验证的部分
-- Takeaways：当前阶段结论
+### 1. Design Philosophy
 
-## License / Attribution
+从高层理解 DataHub 的设计选择：
 
-DataHub 名称、官方文档及相关内容归其各自权利人所有。本仓库主要保存个人研究笔记、中文释义和实验结果；需要查看完整、最新内容时，请以官方文档为准。
+- metadata as infrastructure
+- graph-first relationships
+- active / continuously synchronized metadata
+- governance and provenance as first-class context
+- one context plane for humans and machines
+
+→ [Design Philosophy](docs/design-philosophy.md)
+
+### 2. Architecture
+
+不以源码实现为目标，而研究逻辑架构、信息流与边界：
+
+- source systems
+- metadata/context ingestion
+- unified context graph
+- semantic enrichment
+- governance & trust
+- context activation
+- human / agent consumers
+
+→ [Architecture](docs/architecture.md)
+
+### 3. AI Context Layer
+
+重点研究 AI 时代 Context Layer 的必要性，以及 DataHub 的答案：
+
+- Context Management vs Context Engineering
+- Context Graph
+- Semantic / Technical / Operational / Business Context
+- freshness
+- provenance
+- trust
+- MCP & Agent Context
+- read/write context
+
+→ [Context Layer](docs/context-layer.md)
+
+## 官方文档学习
+
+官方文档会做中文学习笔记，但采用：
+
+**原文链接 → 中文释义 → 作者主张 → 我的理解 → 架构含义 → 开放问题**
+
+而不是逐字镜像翻译。
+
+→ [Official Docs Notes](docs/official-docs/README.md)
+
+## 当前研究假设
+
+```mermaid
+flowchart LR
+    CATALOG[Data Catalog]
+    META[Metadata Platform]
+    GRAPH[Metadata / Context Graph]
+    CONTEXT[Enterprise Context Layer]
+    AGENT[AI / Agent Infrastructure]
+
+    CATALOG --> META --> GRAPH --> CONTEXT --> AGENT
+```
+
+这不是预设结论，而是本仓库准备验证和修正的一条演化假设。
