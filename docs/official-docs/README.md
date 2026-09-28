@@ -15,28 +15,29 @@
 - [Agent Read / Write Context — 官方材料中文学习笔记](agent-read-write.md)
 - [Human + Agent Shared Context — 官方材料中文学习笔记](shared-truth-plane.md)
 - [Context Platform Failure Modes — 官方材料学习笔记](failure-modes.md)
+- [DataHub Design Philosophy — 官方材料综合学习笔记](design-philosophy-synthesis.md)
 
-## 学习主线
+## 第一阶段材料覆盖
 
-### Foundation
-Metadata / lineage / governance / context graph
+### Historical foundations
+Active metadata / metadata graph / shift left / governance as code
 
 ### Context lifecycle
-Context Intelligence / Context Hub / proposals / evals / publication / continuous context
+Context Graph / Context Intelligence / proposals / evals / publication / freshness
 
 ### Agent lifecycle
-MCP / Agents / Tasks / Decisions / Agent Registry / scoped context / write-back
+MCP / Agent Context Kit / Agent Registry / Agents / Tasks / Decisions
 
-### Architecture boundaries & reliability
-Context vs Semantic / Knowledge Graph / Policy-IAM / shared truth / failure modes / eventual consistency
+### Architecture boundaries
+Semantic / Knowledge Graph / Policy-IAM / shared truth / failure modes
 
-## Note Template
+## 阅读原则
 
-- Source
-- Date / Version
-- 中文释义
-- Architectural Claim
-- Design Philosophy
-- AI-era Implication
-- Questions / Critique
-- Related Concepts
+官方材料同时包含 architecture explanation 与 vendor narrative。
+
+笔记中尽量区分：
+
+- 明确产品事实；
+- 厂商主张；
+- 可泛化的架构原则；
+- 我们自己的推论。
