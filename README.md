@@ -21,35 +21,75 @@
 
 ## Phase 2 — Product Mapping
 
-第二阶段开始把 Reference Architecture 映射到 DataHub 当前真实产品能力。
-
 - [Phase 2 Index](docs/product-mapping/README.md)
-- **[01 — Reference Architecture → DataHub Current Product](docs/product-mapping/01-reference-architecture-to-datahub.md)**
+- [01 — Reference Architecture → DataHub Current Product](docs/product-mapping/01-reference-architecture-to-datahub.md)
+- **[02 — Metadata Model as Context Substrate](docs/product-mapping/02-metadata-model-as-context-substrate.md)**
+- 下一篇：**Context Lifecycle Product Mapping**
 
 当前快照时间：**2026-09-28**
 
-## 当前 Product Mapping 结论
+## 为什么 Metadata Model 是关键？
 
 ~~~mermaid
 flowchart LR
-    STRONG[Strong / Mature<br/>Ingestion · Graph · Lineage · Search · Governance]
-    BETA[2026 Expansion<br/>Context Lifecycle · Agents · Semantic Entities]
-    PARTIAL[Partial<br/>Temporal · Authority · Reconciliation · Decision Audit]
-    EXT[External<br/>Semantic Execution · Runtime Data Authorization]
+    URN[URN / Identity]
+    ENTITY[Entity]
+    ASPECT[Typed Aspects]
+    REL[Relationships]
+    TIME[Versioned + Timeseries]
+    EVENT[MCP / MCL]
+    CONTEXT[Context Platform]
 
-    STRONG --> BETA --> PARTIAL
-    BETA --> EXT
+    URN --> ENTITY --> ASPECT
+    ASPECT --> REL
+    ASPECT --> TIME
+    ASPECT --> EVENT
+    REL --> CONTEXT
+    TIME --> CONTEXT
+    EVENT --> CONTEXT
 ~~~
 
-DataHub 当前最成熟的是 metadata/context substrate。
+DataHub 当前 metadata model 的长期优势：
 
-Context lifecycle 已经真实存在，但 Context Platform 当前仍是 **Public Beta**；custom Agents 是 **Private Beta**。citeturn339781search0turn341575search1
+- stable identity；
+- typed facets；
+- atomic writes；
+- native graph edges；
+- metadata history；
+- operational timeseries；
+- event-driven change stream；
+- extensibility。
 
-我们的 Reference Architecture 中更严格的 assertion-level temporal validity、typed authority、generic invalidation 和 decision replay，目前不能从公开官方材料证明为完整统一能力。
+这解释了为什么 DataHub 可以在旧 Metadata Platform 上继续构建 Context Platform，而不是重新设计底层 substrate。
 
-## Final Thesis
+## 当前模型边界
 
-> **AI Agent 的可靠性上限，不只由模型决定，而由它所处的企业认知基础设施决定。DataHub 最值得研究的地方，是它长期把 metadata 设计成实时、关系化、可治理、可编程的基础设施；这使它能够自然扩展为一种面向 Human 和 Agent 的 Context Platform。**
+DataHub 的核心原语仍然更接近：
+
+> **Entity 的某个 Aspect 当前是什么。**
+
+我们的 AI-era Reference Architecture 更进一步要求：
+
+> **某条 Assertion 在什么 scope / authority / evidence / valid-time 下成立。**
+
+因此：
+
+> **DataHub Metadata Model 是优秀的 Context Substrate，但不等于完整的 Epistemic Model。**
+
+一个可能的长期 hybrid：
+
+~~~mermaid
+flowchart TB
+    E[Entity]
+    A[Typed Aspects]
+    C[Scoped Assertions]
+    G[Context Graph]
+
+    E --> A --> G
+    E --> C --> G
+~~~
+
+Aspect 继续承载 schema、ownership、lineage 等强类型 metadata；Assertion 更适合承载可冲突、带 authority / evidence / temporal validity 的组织知识。
 
 ## 研究方法
 
@@ -57,7 +97,7 @@ Context lifecycle 已经真实存在，但 Context Platform 当前仍是 **Publi
 
 不把：
 
-- vendor vision 当 current feature；
-- 有相似 feature 当完整 primitive；
-- Cloud capability 当 OSS capability；
-- Agent context 当 runtime authorization。
+- version history 当 bitemporal truth；
+- URN identity 当 entity resolution；
+- relationship graph 当 epistemic graph；
+- write provenance 当 knowledge provenance。
