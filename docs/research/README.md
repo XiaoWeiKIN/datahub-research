@@ -1,0 +1,18 @@
+# Research Notes
+
+这里保存高层研究笔记。目标不是复述 DataHub 功能，而是理解它背后的架构命题，并判断这些命题在 AI / Agent 时代是否成立。
+
+## 主线
+
+1. [Why Context Layer?：从 Data Catalog 到 AI Context Infrastructure](01-why-context-layer.md)
+
+## 写作约定
+
+每篇研究笔记尽量区分四类内容：
+
+- **Observed**：官方文档或公开材料明确表达的事实/设计。
+- **Vendor Claim**：DataHub 对自身产品能力与市场定位的主张。
+- **Inference**：基于材料得到的架构推论。
+- **Open Question**：仍需要比较、实践或更多证据的问题。
+
+这样可以避免把产品营销语言直接变成技术结论。
