@@ -20,42 +20,40 @@
 - [Context Graph / Knowledge Graph — 官方材料中文学习笔记](context-graph.md)
 - [Context Layer vs Semantic Layer — 官方材料中文学习笔记](semantic-layer.md)
 - [Continuous Context / Freshness / Provenance — 官方材料中文学习笔记](continuous-context.md)
+- [Agent Read / Write Context — 官方材料中文学习笔记](agent-read-write.md)
 
 ## 优先阅读顺序
 
-### A. DataHub foundation
+### A. Foundation
 
-- What is DataHub
 - Metadata / discovery / lineage / governance
-- ingestion 与 active metadata 的高层机制
+- active metadata
+- context graph
 
-### B. Context Platform
+### B. Context lifecycle
 
-- Context Platform
-- Context Graph
-- Context Management
-- Continuous Context
-- Context Intelligence / Context Hub / Context Activation
+- Context Intelligence
+- Context Hub
+- proposals / evals / publication
+- continuous context
 
-### C. Agent consumption
+### C. Agent lifecycle
 
 - MCP
 - Agent Context Kit
-- Agents
-- semantic retrieval
-- Agent write-back
+- Agents / Tasks / Decisions
+- Agent Registry
+- write-back / governance
 
 ### D. Comparative study
 
 - Context Layer vs Semantic Layer
 - Context Graph vs Knowledge Graph
-- Context Platform vs Data Catalog
 - Context Management vs Context Engineering
 - Context Layer vs RAG infrastructure
+- Context write-back vs Agent memory
 
 ## Note Template
-
-每篇笔记使用：
 
 - Source
 - Date / Version
