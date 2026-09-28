@@ -10,11 +10,11 @@
 4. [Context Freshness & Provenance：一个 Agent 怎么知道 Context 已经不应该再相信？](04-context-freshness-and-provenance.md)
 5. [Agent Read / Write Context：Agent 可以贡献知识，但谁有权发布 Truth？](05-agent-read-write-context.md)
 6. [Human + Agent Shared Truth Plane：Context Platform 是不是 Enterprise AI Control Plane？](06-human-agent-shared-truth-plane.md)
+7. [Context Layer Reference Architecture：从 DataHub 学习成果收束成可实现架构](07-context-layer-reference-architecture.md)
 
 ## 下一步
 
-7. **Context Layer Reference Architecture**
-8. Context Platform Failure Modes
+8. **Context Platform Failure Modes**
 9. DataHub Design Philosophy — Synthesis
 
 ## 写作约定
