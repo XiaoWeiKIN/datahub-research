@@ -19,6 +19,7 @@
 - [Context Platform — 官方材料中文学习笔记](context-platform.md)
 - [Context Graph / Knowledge Graph — 官方材料中文学习笔记](context-graph.md)
 - [Context Layer vs Semantic Layer — 官方材料中文学习笔记](semantic-layer.md)
+- [Continuous Context / Freshness / Provenance — 官方材料中文学习笔记](continuous-context.md)
 
 ## 优先阅读顺序
 
@@ -33,7 +34,7 @@
 - Context Platform
 - Context Graph
 - Context Management
-- Context Layer
+- Continuous Context
 - Context Intelligence / Context Hub / Context Activation
 
 ### C. Agent consumption
@@ -42,6 +43,7 @@
 - Agent Context Kit
 - Agents
 - semantic retrieval
+- Agent write-back
 
 ### D. Comparative study
 
