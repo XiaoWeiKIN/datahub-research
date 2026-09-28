@@ -16,56 +16,35 @@
 5. **[05 — Agent Read / Write Context](docs/research/05-agent-read-write-context.md)**
 6. **[06 — Human + Agent Shared Truth Plane](docs/research/06-human-agent-shared-truth-plane.md)**
 7. **[07 — Context Layer Reference Architecture](docs/research/07-context-layer-reference-architecture.md)**
-8. 下一篇：**Context Platform Failure Modes**
+8. **[08 — Context Platform Failure Modes](docs/research/08-context-platform-failure-modes.md)**
+9. 下一篇：**DataHub Design Philosophy — Synthesis**
 
 ## 当前参考架构
 
 ~~~mermaid
 flowchart TB
-    subgraph DP[Data / Execution Plane]
-        WH[Warehouse / Lakehouse]
-        OPS[Operational Systems]
-        DOC[Docs / SaaS / Repos]
-    end
+    REAL[Enterprise Reality]
 
     subgraph EP[Epistemic / Context Plane]
         OBS[Observation]
-        ID[Identity]
         ASSERT[Assertions]
-        CG[Context Graph]
-        TRUST[Provenance / Freshness / Authority]
+        GRAPH[Context Graph]
+        TRUST[Trust Envelope]
         REC[Reconciliation / Invalidation]
-        PUB[Proposal / Publication]
+        PUB[Publication]
         RET[Scoped Retrieval]
     end
 
-    subgraph SP[Semantic Plane]
-        SM[Semantic Models]
-        COMP[Metric / Query Compiler]
+    subgraph OTHER[Execution Planes]
+        SEM[Semantic: compute]
+        POLICY[Policy: allow]
+        DATA[Data: execute]
+        AG[Agent: reason / act]
     end
 
-    subgraph PP[Identity / Policy Plane]
-        PRI[Principal / Delegation]
-        PDP[Policy Decision]
-        PEP[Policy Enforcement]
-    end
-
-    subgraph AP[Agent Plane]
-        AG[Agents]
-        TASK[Tasks]
-        MEM[Private Memory]
-    end
-
-    DP --> OBS --> ID --> ASSERT --> CG
-    CG --> TRUST --> REC --> PUB --> RET
-    RET --> AG
-
-    SM <--> CG
-    AG --> COMP --> PDP
-    PRI --> PDP
-    PDP --> PEP --> DP
-
-    AP --> ASSERT
+    REAL --> OBS --> ASSERT --> GRAPH --> TRUST --> REC --> PUB --> RET --> AG
+    AG --> SEM --> POLICY --> DATA
+    DATA --> REAL
 ~~~
 
 ## 当前研究形成的核心原则
@@ -84,46 +63,55 @@ flowchart TB
 
 > **Context informs policy; policy governs execution.**
 
-## Context Layer 的核心数据模型
+> **Unknown must remain a state; absence of evidence must not silently become false.**
 
-重要 context 不应只是 property，而应当是带 trust metadata 的 assertion：
+> **A shared Context Plane reduces duplication but increases blast radius, so rollback and scoped publication are first-class reliability features.**
 
-~~~text
-ContextAssertion
-├── subject / predicate / value
-├── scope / domain
-├── source / evidence
-├── authority
-├── provenance
-├── valid time / observed time
-├── epistemic state
-├── publication state
-└── dependencies
+## Reliability View
+
+~~~mermaid
+flowchart LR
+    SOURCE[Source]
+    OBS[Observe]
+    TRUST[Qualify]
+    PUB[Publish]
+    AG[Agent]
+    ACT[Action]
+
+    SOURCE --> OBS --> TRUST --> PUB --> AG --> ACT
+
+    SOURCE -.silence.-> OBS
+    TRUST -.conflict.-> PUB
+    PUB -.bad rollout.-> AG
+    AG -.poisoned write-back.-> TRUST
 ~~~
 
-## 五个 Plane 的边界
+Context Platform 的可靠性不应只按 ingest/search/MCP 衡量，而应按：
 
-| Plane | 主要问题 |
-|---|---|
-| Context / Epistemic | 知道什么？为什么相信？当前是否适用？ |
-| Semantic | 怎么算？ |
-| Identity / Policy | 当前主体是否允许？ |
-| Data / Execution | 数据在哪里、如何真实执行？ |
-| Agent | 如何解释、规划、调用工具和行动？ |
+- detection
+- qualification
+- validation
+- scoping
+- publication
+- invalidation
+- reconciliation
+- rollback
+- audit
+
+衡量。
 
 ## 研究方法
 
-**原文链接 → 中文释义 → 厂商主张 → 架构拆解 → 外部对照 → 我们的工作定义 → 开放问题**
+**原文链接 → 中文释义 → 厂商主张 → 架构拆解 → 外部对照 → 我们的工作定义 → Failure-oriented validation**
 
 关注：
 
-- architectural responsibility
-- system boundaries
-- information model
-- authority / trust model
-- temporal model
+- architecture boundaries
+- trust / authority
+- temporal validity
 - provenance
-- reconciliation
-- SLO / failure modes
-- AI / Agent security
-- human-machine governance
+- source health
+- context security
+- blast radius
+- rollback
+- decision reproducibility
