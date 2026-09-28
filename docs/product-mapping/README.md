@@ -20,6 +20,13 @@
 ## Mapping
 
 1. [Reference Architecture → DataHub Current Product](01-reference-architecture-to-datahub.md)
+2. [Metadata Model as Context Substrate](02-metadata-model-as-context-substrate.md)
+
+## 下一步
+
+3. **Context Lifecycle Product Mapping**
+4. Agent Governance Product Mapping
+5. OSS vs Cloud Context Architecture
 
 ## 研究规则
 
