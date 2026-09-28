@@ -9,20 +9,17 @@
 3. [Context Layer vs Semantic Layer：谁负责意义，谁负责当前语境？](03-context-layer-vs-semantic-layer.md)
 4. [Context Freshness & Provenance：一个 Agent 怎么知道 Context 已经不应该再相信？](04-context-freshness-and-provenance.md)
 5. [Agent Read / Write Context：Agent 可以贡献知识，但谁有权发布 Truth？](05-agent-read-write-context.md)
+6. [Human + Agent Shared Truth Plane：Context Platform 是不是 Enterprise AI Control Plane？](06-human-agent-shared-truth-plane.md)
 
 ## 下一步
 
-6. **Human + Agent Shared Truth Plane**
-7. Context Layer Reference Architecture
-8. Context Platform vs Enterprise Control Plane
+7. **Context Layer Reference Architecture**
+8. Context Platform Failure Modes
+9. DataHub Design Philosophy — Synthesis
 
 ## 写作约定
-
-每篇研究笔记尽量区分四类内容：
 
 - **Observed**：官方文档或公开材料明确表达的事实/设计。
 - **Vendor Claim**：DataHub 对自身产品能力与市场定位的主张。
 - **Inference**：基于材料得到的架构推论。
 - **Open Question**：仍需要比较、实践或更多证据的问题。
-
-这样可以避免把产品营销语言直接变成技术结论。
