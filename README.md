@@ -37,41 +37,47 @@
 
 - [Phase 3 Index](docs/case-studies/README.md)
 - [Case 01 — Analytics Agent: Enterprise Customer Net Revenue](docs/case-studies/01-analytics-agent-net-revenue.md)
-- **[Case 02 — Schema Change Incident Agent](docs/case-studies/02-schema-change-incident-agent.md)**
-- 下一篇：**Governance / PII Agent**
+- [Case 02 — Schema Change Incident Agent](docs/case-studies/02-schema-change-incident-agent.md)
+- **[Case 03 — Governance / PII Agent](docs/case-studies/03-governance-pii-agent.md)**
+- 下一篇：**Cross-case Architecture Synthesis**
 
-## Case 02 Architecture
+## Case 03 Architecture
 
 ~~~mermaid
 flowchart LR
-    CHANGE[Schema Change]
-    CTX[Fresh Context]
-    LINEAGE[Column-level Lineage]
-    IMPACT[Blast Radius]
-    OWNER[Owner / Repo]
-    PLAN[Repair Plan]
-    DEC[Human Decision]
-    PR[PR / CI]
-    VERIFY[Independent Verification]
-    WRITE[Incident / Context Write-back]
+    CLASS[Classification]
+    GRAPH[Lineage / Agent Graph]
+    DISC[Scoped Discovery]
+    ID[Agent + Human Identity]
+    POLICY[Runtime Policy]
+    DATA[Data Enforcement]
+    REM[Remediation]
+    VERIFY[Verify]
+    AUDIT[Audit]
 
-    CHANGE --> CTX --> LINEAGE --> IMPACT --> OWNER --> PLAN --> DEC --> PR --> VERIFY --> WRITE
+    CLASS --> GRAPH --> DISC --> ID --> POLICY --> DATA --> REM --> VERIFY --> AUDIT
 ~~~
 
-DataHub 2026 Agent Hackathon 已经出现多个类似生产模式：column-level lineage 算 blast radius、修 dbt/Airflow、开 PR、通过 evidence gate、用另一 API read-back 验证，再把 tags、incident、postmortem、lineage/docs 写回 DataHub。citeturn121928search0
+Case 03 的核心结论：
 
-Case 02 验证的新原则：
+> **Context visibility != runtime authorization.**
 
-> **An agent cannot prove its own success by reporting success.**
+DataHub Cloud Search Access Controls 能在 query-time 限制 metadata search / browse / direct entity discovery；这保护 Context/Metadata Plane。
 
-> **Operational action must end in independent verification and governed shared context, not private Agent memory.**
+DataHub Agent Registry 可以把 data classification 通过 lineage 传播到 consuming Agent，并触发 incident，帮助治理团队发现风险。
 
-> **Lineage reachability tells you what may be affected; it does not by itself tell you what must be changed.**
+但最终某个 Agent / Human 是否能读取具体敏感字段，仍需要 runtime identity、purpose 与 query-time enforcement。
+
+所以生产 Agent Governance 必须同时回答：
+
+~~~text
+What can the Agent discover?
+What is the data classified as?
+Who is invoking the Agent?
+What is the purpose?
+What may that principal actually read or do?
+~~~
 
 ## Next
 
-Case 03 将直接测试：
-
-> **Context visibility != runtime authorization**
-
-用 PII / governance propagation / Agent lineage 场景检验 Policy Plane。
+Cross-case synthesis 会从 Analytics、Incident Repair、Governance 三个案例中抽出 Context Platform 的不可约核心。
