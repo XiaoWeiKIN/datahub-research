@@ -11,11 +11,11 @@
 5. [Agent Read / Write Context：Agent 可以贡献知识，但谁有权发布 Truth？](05-agent-read-write-context.md)
 6. [Human + Agent Shared Truth Plane：Context Platform 是不是 Enterprise AI Control Plane？](06-human-agent-shared-truth-plane.md)
 7. [Context Layer Reference Architecture：从 DataHub 学习成果收束成可实现架构](07-context-layer-reference-architecture.md)
+8. [Context Platform Failure Modes：用失败场景反向检验 Reference Architecture](08-context-platform-failure-modes.md)
 
 ## 下一步
 
-8. **Context Platform Failure Modes**
-9. DataHub Design Philosophy — Synthesis
+9. **DataHub Design Philosophy — Synthesis**
 
 ## 写作约定
 
