@@ -7,12 +7,13 @@
 1. [Why Context Layer?：从 Data Catalog 到 AI Context Infrastructure](01-why-context-layer.md)
 2. [Context Graph vs Knowledge Graph：新范式还是 Knowledge Graph 的一次重新聚焦？](02-context-graph-vs-knowledge-graph.md)
 3. [Context Layer vs Semantic Layer：谁负责意义，谁负责当前语境？](03-context-layer-vs-semantic-layer.md)
+4. [Context Freshness & Provenance：一个 Agent 怎么知道 Context 已经不应该再相信？](04-context-freshness-and-provenance.md)
 
 ## 下一步
 
-4. **Context Freshness & Provenance**
-5. Agent Read / Write Context
+5. **Agent Read / Write Context**
 6. Human + Agent Shared Truth Plane
+7. Context Layer Reference Architecture
 
 ## 写作约定
 
