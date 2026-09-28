@@ -11,59 +11,34 @@ Phase 3 用真实类型的 Agent 任务验证整个架构。
 
 1. [Analytics Agent — Enterprise Customer Net Revenue](01-analytics-agent-net-revenue.md)
 2. [Schema Change Incident Agent](02-schema-change-incident-agent.md)
+3. [Governance / PII Agent](03-governance-pii-agent.md)
 
 ## Coverage
 
 ~~~mermaid
 flowchart LR
-    C1[Case 01<br/>Read-heavy Analytics]
-    C2[Case 02<br/>Operational Repair]
-    C3[Next<br/>Governance / PII]
+    C1[Case 01<br/>Analytics]
+    C2[Case 02<br/>Operations]
+    C3[Case 03<br/>Governance]
+    C4[Next<br/>Cross-case Synthesis]
 
-    C1 --> C2 --> C3
+    C1 --> C2 --> C3 --> C4
 ~~~
 
 ### Case 01
 
-验证：
-
-~~~text
-Intent
--> Context
--> Semantic
--> Policy
--> Query
--> Evidence
--> Answer
-~~~
+测试正确 business meaning / semantic definition。
 
 ### Case 02
 
-验证：
+测试安全行动、Human Decision、独立验证与 write-back。
 
-~~~text
-Incident
--> Fresh Context
--> Lineage Blast Radius
--> Ownership
--> Repair Plan
--> Human Decision
--> PR / CI
--> Independent Verification
--> Context Write-back
-~~~
+### Case 03
 
-## 方法
+测试 Context visibility 与 Runtime authorization 的边界。
 
-每个 case 区分：
+## 下一篇
 
-- **Synthetic Fixture**
-- **DataHub Current Capability**
-- **Reference Architecture Ideal**
-- **Gap / Failure Test**
+4. **Cross-case Architecture Synthesis**
 
-## 下一 Case
-
-3. **Governance / PII Agent**
-
-重点验证 Context Visibility 与 Runtime Authorization 的边界。
+从三个 case 中抽出每次都重复出现的不可约组件。
