@@ -7,7 +7,7 @@
 > DataHub: https://datahub.com/  
 > Documentation: https://docs.datahub.com/
 
-## Start Here
+## 第一阶段：理论主线
 
 1. **[01 — Why Context Layer?](docs/research/01-why-context-layer.md)**
 2. **[02 — Context Graph vs Knowledge Graph](docs/research/02-context-graph-vs-knowledge-graph.md)**
@@ -17,101 +17,117 @@
 6. **[06 — Human + Agent Shared Truth Plane](docs/research/06-human-agent-shared-truth-plane.md)**
 7. **[07 — Context Layer Reference Architecture](docs/research/07-context-layer-reference-architecture.md)**
 8. **[08 — Context Platform Failure Modes](docs/research/08-context-platform-failure-modes.md)**
-9. 下一篇：**DataHub Design Philosophy — Synthesis**
+9. **[09 — DataHub Design Philosophy — Synthesis](docs/research/09-datahub-design-philosophy-synthesis.md)**
+
+## Final Thesis
+
+> **AI Agent 的可靠性上限，不只由模型决定，而由它所处的企业认知基础设施决定。DataHub 最值得研究的地方，是它长期把 metadata 设计成实时、关系化、可治理、可编程的基础设施；这使它能够自然扩展为一种面向 Human 和 Agent 的 Context Platform。Context Platform 的真正任务不是给模型更多信息，而是持续维护一个可被组织信任、解释、修正和复用的企业现实模型。**
+
+## DataHub 的长期设计主线
+
+~~~mermaid
+flowchart LR
+    CAT[Data Catalog]
+    GRAPH[Metadata Graph]
+    ACTIVE[Active Metadata]
+    GOV[Governed Metadata Platform]
+    CONTEXT[Context Graph]
+    AGENT[Agent-ready Context Platform]
+
+    CAT --> GRAPH --> ACTIVE --> GOV --> CONTEXT --> AGENT
+~~~
+
+当前研究认为：AI 没有让传统 metadata architecture 失效，反而提高了它的价值。
+
+- lineage → provenance / dependency reasoning
+- ownership → authority
+- quality → trust
+- usage → observed context
+- event-driven metadata → freshness
+- graph → context traversal
+- governance → agent grounding
+- API/MCP → machine activation
 
 ## 当前参考架构
 
 ~~~mermaid
 flowchart TB
-    REAL[Enterprise Reality]
+    subgraph REALITY[Enterprise Reality]
+        DATA[Data Systems]
+        DOCS[Knowledge]
+        PEOPLE[People / Org]
+        OPS[Operational Signals]
+    end
 
-    subgraph EP[Epistemic / Context Plane]
-        OBS[Observation]
+    subgraph CONTEXT[Epistemic Context Infrastructure]
+        OBS[Observe]
+        ID[Identity]
         ASSERT[Assertions]
-        GRAPH[Context Graph]
-        TRUST[Trust Envelope]
-        REC[Reconciliation / Invalidation]
-        PUB[Publication]
-        RET[Scoped Retrieval]
+        GRAPH[Graph]
+        TRUST[Trust / Authority / Provenance]
+        REC[Reconcile / Invalidate]
+        PUB[Publish]
+        PROJ[Project / Retrieve]
     end
 
-    subgraph OTHER[Execution Planes]
-        SEM[Semantic: compute]
-        POLICY[Policy: allow]
-        DATA[Data: execute]
-        AG[Agent: reason / act]
+    subgraph CONSUMERS[Consumers]
+        HUMAN[Humans]
+        AGENTS[Agents]
+        APPS[Applications]
     end
 
-    REAL --> OBS --> ASSERT --> GRAPH --> TRUST --> REC --> PUB --> RET --> AG
-    AG --> SEM --> POLICY --> DATA
-    DATA --> REAL
+    REALITY --> OBS --> ID --> ASSERT --> GRAPH
+    GRAPH --> TRUST --> REC --> PUB --> PROJ
+    PROJ --> CONSUMERS
+    CONSUMERS -.feedback.-> ASSERT
 ~~~
 
-## 当前研究形成的核心原则
+## 核心设计原则
 
-> **Semantic Layer makes meaning executable. Context Layer makes meaning situationally trustworthy.**
+1. **Metadata is infrastructure, not documentation.**
+2. **Relationships are first-class.**
+3. **Context must stay active and temporally aligned with reality.**
+4. **Governance is context, not post-processing.**
+5. **Capture authoritative context near the source when possible.**
+6. **Humans and machines should share a governed substrate, not necessarily the same view.**
+7. **Generated context is proposal, not truth.**
+8. **Authority should be federated and typed.**
+9. **Unknown / stale / conflicted must remain explicit states.**
+10. **Deterministic systems should constrain probabilistic Agent reasoning.**
+11. **Context must be continuously reconciled, not authored once.**
+12. **Protocol interoperability matters, but trusted substrate matters more.**
 
-> **Context Graph 的关键不只是 representation，而是 dependency-aware maintenance。**
+## 五个 Plane 的边界
 
-> **Freshness 不是 updated_at；Provenance 不是 audit log。**
+| Plane | 主要问题 |
+|---|---|
+| Context / Epistemic | 知道什么？为什么相信？当前是否适用？ |
+| Semantic | 怎么算？ |
+| Identity / Policy | 当前主体是否允许？ |
+| Data / Execution | 数据在哪里、如何真实执行？ |
+| Agent | 如何解释、规划、调用工具和行动？ |
 
-> **Agents propose. Evidence verifies. Authorities publish.**
+## 第一阶段之后
 
-> **Shared truth means same governed substrate, not same access, same presentation, or one centralized author.**
+理论研究已形成闭环。下一阶段建议从三条路继续：
 
-> **Context Platform 更接近 Enterprise AI 的 Epistemic Control Plane，而不是完整 AI Control Plane。**
+### Product Mapping
 
-> **Context informs policy; policy governs execution.**
+把 Reference Architecture 映射到 DataHub 当前真实能力：
 
-> **Unknown must remain a state; absence of evidence must not silently become false.**
+- implemented
+- partial
+- roadmap
+- unclear / external dependency
 
-> **A shared Context Plane reduces duplication but increases blast radius, so rollback and scoped publication are first-class reliability features.**
+### Comparative Architecture
 
-## Reliability View
+比较不同系统各自解决哪一层责任，不做总体排名。
 
-~~~mermaid
-flowchart LR
-    SOURCE[Source]
-    OBS[Observe]
-    TRUST[Qualify]
-    PUB[Publish]
-    AG[Agent]
-    ACT[Action]
+### Case Studies
 
-    SOURCE --> OBS --> TRUST --> PUB --> AG --> ACT
+用具体 Agent 任务验证架构，例如：
 
-    SOURCE -.silence.-> OBS
-    TRUST -.conflict.-> PUB
-    PUB -.bad rollout.-> AG
-    AG -.poisoned write-back.-> TRUST
-~~~
+> “给我过去 90 天 Enterprise Customer Net Revenue，并解释为什么这个数字可信。”
 
-Context Platform 的可靠性不应只按 ingest/search/MCP 衡量，而应按：
-
-- detection
-- qualification
-- validation
-- scoping
-- publication
-- invalidation
-- reconciliation
-- rollback
-- audit
-
-衡量。
-
-## 研究方法
-
-**原文链接 → 中文释义 → 厂商主张 → 架构拆解 → 外部对照 → 我们的工作定义 → Failure-oriented validation**
-
-关注：
-
-- architecture boundaries
-- trust / authority
-- temporal validity
-- provenance
-- source health
-- context security
-- blast radius
-- rollback
-- decision reproducibility
+完整追踪 context → semantic → policy → query → evidence → answer → audit。
