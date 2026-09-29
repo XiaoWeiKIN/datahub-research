@@ -12,33 +12,43 @@ Phase 3 用真实类型的 Agent 任务验证整个架构。
 1. [Analytics Agent — Enterprise Customer Net Revenue](01-analytics-agent-net-revenue.md)
 2. [Schema Change Incident Agent](02-schema-change-incident-agent.md)
 3. [Governance / PII Agent](03-governance-pii-agent.md)
+4. [Cross-case Architecture Synthesis](04-cross-case-architecture-synthesis.md)
 
-## Coverage
+## Phase 3 完成
 
 ~~~mermaid
 flowchart LR
-    C1[Case 01<br/>Analytics]
-    C2[Case 02<br/>Operations]
-    C3[Case 03<br/>Governance]
-    C4[Next<br/>Cross-case Synthesis]
+    C1[Analytics]
+    C2[Operations]
+    C3[Governance]
+    SYN[Cross-case Synthesis]
 
-    C1 --> C2 --> C3 --> C4
+    C1 --> SYN
+    C2 --> SYN
+    C3 --> SYN
 ~~~
 
-### Case 01
+三个 case 最终重复出现相同的生产闭环：
 
-测试正确 business meaning / semantic definition。
+~~~text
+Scope
+-> Trusted Context
+-> Authority
+-> Deterministic Execution
+-> Independent Verification
+-> Audit
+~~~
 
-### Case 02
+## 核心结论
 
-测试安全行动、Human Decision、独立验证与 write-back。
+> **Agent Reliability is a cross-plane property.**
 
-### Case 03
+错误来源不只可能是模型，也可能是 context、semantic definition、authority、policy、identity、stale data 或 verification failure。
 
-测试 Context visibility 与 Runtime authorization 的边界。
+## 下一阶段
 
-## 下一篇
+建议进入：
 
-4. **Cross-case Architecture Synthesis**
+> **Phase 4 — Comparative Architecture**
 
-从三个 case 中抽出每次都重复出现的不可约组件。
+比较 DataHub 与其他 Context / Metadata / Semantic / Knowledge / Agent-memory 路线的责任边界。
