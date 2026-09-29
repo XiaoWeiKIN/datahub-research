@@ -20,91 +20,75 @@
 ## Phase 2 — Product Mapping
 
 - [Phase 2 Index](docs/product-mapping/README.md)
-- [01 — Reference Architecture → DataHub Current Product](docs/product-mapping/01-reference-architecture-to-datahub.md)
-- [02 — Metadata Model as Context Substrate](docs/product-mapping/02-metadata-model-as-context-substrate.md)
-- [03 — Context Lifecycle Product Mapping](docs/product-mapping/03-context-lifecycle.md)
-- [04 — Agent Governance Product Mapping](docs/product-mapping/04-agent-governance.md)
-- [05 — OSS vs Cloud Context Architecture](docs/product-mapping/05-oss-vs-cloud-context-architecture.md)
+- [Reference Architecture → DataHub](docs/product-mapping/01-reference-architecture-to-datahub.md)
+- [Metadata Model as Context Substrate](docs/product-mapping/02-metadata-model-as-context-substrate.md)
+- [Context Lifecycle](docs/product-mapping/03-context-lifecycle.md)
+- [Agent Governance](docs/product-mapping/04-agent-governance.md)
+- [OSS vs Cloud](docs/product-mapping/05-oss-vs-cloud-context-architecture.md)
 
 ## Phase 3 — Concrete Case Studies
 
 - [Phase 3 Index](docs/case-studies/README.md)
-- [Case 01 — Analytics Agent: Enterprise Customer Net Revenue](docs/case-studies/01-analytics-agent-net-revenue.md)
-- [Case 02 — Schema Change Incident Agent](docs/case-studies/02-schema-change-incident-agent.md)
-- [Case 03 — Governance / PII Agent](docs/case-studies/03-governance-pii-agent.md)
-- **[Case 04 — Cross-case Architecture Synthesis](docs/case-studies/04-cross-case-architecture-synthesis.md)**
+- [Analytics Agent](docs/case-studies/01-analytics-agent-net-revenue.md)
+- [Schema Change Incident Agent](docs/case-studies/02-schema-change-incident-agent.md)
+- [Governance / PII Agent](docs/case-studies/03-governance-pii-agent.md)
+- [Cross-case Architecture Synthesis](docs/case-studies/04-cross-case-architecture-synthesis.md)
 
-## Cross-case Runtime Architecture
+## Phase 4 — Comparative Architecture
 
-~~~mermaid
-flowchart LR
-    SCOPE[Scope]
-    CTX[Trusted Context]
-    AUTH[Authority]
-    EXEC[Deterministic Execution]
-    VERIFY[Verification]
-    AUDIT[Audit]
+- [Phase 4 Index](docs/comparative/README.md)
+- **[01 — Context Architecture Landscape](docs/comparative/01-context-architecture-landscape.md)**
+- 下一篇：**DataHub vs Atlan**
 
-    SCOPE --> CTX --> AUTH --> EXEC --> VERIFY --> AUDIT
-~~~
-
-Analytics、Incident Repair、Governance 三类 Agent 最终都依赖相同闭环。
-
-### Analytics
-
-> Context chooses; semantics computes.
-
-### Incident
-
-> Automation without independent verification is incomplete automation.
-
-### Governance
-
-> Context visibility != runtime authorization.
-
-### Cross-case
-
-> **Agent Reliability is a cross-plane property.**
-
-模型只是其中一个变量；context、semantic definition、identity、authority、policy、data state 和 verification 共同决定最终可靠性。
-
-## 当前总模型
+## Comparative Landscape
 
 ~~~mermaid
 flowchart TB
-    subgraph CONTEXT[Shared Context Plane]
-        ID[Identity]
-        GRAPH[Relationships]
-        TRUST[Trust / Freshness]
-        AUTH[Authority]
-    end
+    DH[DataHub<br/>Active Metadata + Context Lifecycle]
+    AT[Atlan<br/>Enterprise Data Graph + Context/Governance]
+    OM[OpenMetadata<br/>Open Metadata Knowledge Graph]
+    CO[Collibra<br/>Governance Operating Model]
+    DBT[dbt<br/>Executable Semantic Layer]
+    KG[Knowledge Graph<br/>Graph Reasoning]
 
-    subgraph AGENT[Agent Plane]
-        PLAN[Interpret / Plan]
-        DEC[Human Decision]
-    end
+    CTX[Enterprise AI Context]
 
-    subgraph EXEC[Execution Planes]
-        SEM[Semantic Runtime]
-        POLICY[Policy Runtime]
-        TOOLS[Warehouse / Git / SaaS]
-    end
-
-    subgraph REL[Reliability]
-        VERIFY[Independent Verification]
-        AUDIT[Decision Audit]
-    end
-
-    CONTEXT --> AGENT
-    AGENT --> EXEC
-    EXEC --> REL
-    REL -.feedback.-> CONTEXT
+    DH --> CTX
+    AT --> CTX
+    OM --> CTX
+    CO --> CTX
+    DBT --> CTX
+    KG --> CTX
 ~~~
 
-## Next
+2026 年这些路线正在明显收敛：DataHub、Atlan、OpenMetadata、Collibra、dbt 都已经通过 MCP 向 AI client 暴露不同类型的 governed context。
 
-建议进入：
+真正需要比较的已经不是：
 
-> **Phase 4 — Comparative Architecture**
+> 谁支持 MCP / AI Search？
 
-不比较产品“谁最好”，而比较各条技术路线分别把 Identity、Graph、Context Lifecycle、Authority、Semantic Execution、Policy、Agent Activation、Write-back 与 Audit 放在哪里。
+而是：
+
+> **MCP 背后的 authoritative substrate 是什么？context 如何产生、验证、更新、执行和审计？**
+
+## 当前比较框架
+
+~~~text
+Identity
+Graph
+Business Semantics
+Operational Context
+Authority
+Provenance
+Temporal Validity
+Conflict Model
+Context Lifecycle
+Agent Activation
+Write-back
+Semantic Execution
+Runtime Authorization
+Decision Audit
+Interoperability
+~~~
+
+不做总体排名，只比较 architecture responsibility。
