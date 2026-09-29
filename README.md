@@ -5,13 +5,6 @@
 > DataHub: https://datahub.com/  
 > Documentation: https://docs.datahub.com/
 
-## 最新专题 — Metrics & Semantic Models
-
-- **[02 — DataHub 如何管理业务语义，而不成为指标计算引擎](docs/research/02-metrics-and-semantic-models.md)**
-- [官方材料释义与证据表](docs/official-docs/metrics-and-semantic-models.md)
-
-核查日期：2026-09-28。研究定义目录与计算引擎的边界、语义模型与血缘、OSI / Apache Ossie、跨平台身份，以及 Agent 消费的现状与目标架构。此专题沿用对话编号 02，保留下面原有主线与案例。
-
 ## Phase 1 — Architecture & Philosophy
 
 1. [Why Context Layer?](docs/research/01-why-context-layer.md)
@@ -38,46 +31,80 @@
 - [Phase 3 Index](docs/case-studies/README.md)
 - [Case 01 — Analytics Agent: Enterprise Customer Net Revenue](docs/case-studies/01-analytics-agent-net-revenue.md)
 - [Case 02 — Schema Change Incident Agent](docs/case-studies/02-schema-change-incident-agent.md)
-- **[Case 03 — Governance / PII Agent](docs/case-studies/03-governance-pii-agent.md)**
-- 下一篇：**Cross-case Architecture Synthesis**
+- [Case 03 — Governance / PII Agent](docs/case-studies/03-governance-pii-agent.md)
+- **[Case 04 — Cross-case Architecture Synthesis](docs/case-studies/04-cross-case-architecture-synthesis.md)**
 
-## Case 03 Architecture
+## Cross-case Runtime Architecture
 
 ~~~mermaid
 flowchart LR
-    CLASS[Classification]
-    GRAPH[Lineage / Agent Graph]
-    DISC[Scoped Discovery]
-    ID[Agent + Human Identity]
-    POLICY[Runtime Policy]
-    DATA[Data Enforcement]
-    REM[Remediation]
-    VERIFY[Verify]
+    SCOPE[Scope]
+    CTX[Trusted Context]
+    AUTH[Authority]
+    EXEC[Deterministic Execution]
+    VERIFY[Verification]
     AUDIT[Audit]
 
-    CLASS --> GRAPH --> DISC --> ID --> POLICY --> DATA --> REM --> VERIFY --> AUDIT
+    SCOPE --> CTX --> AUTH --> EXEC --> VERIFY --> AUDIT
 ~~~
 
-Case 03 的核心结论：
+Analytics、Incident Repair、Governance 三类 Agent 最终都依赖相同闭环。
 
-> **Context visibility != runtime authorization.**
+### Analytics
 
-DataHub Cloud Search Access Controls 能在 query-time 限制 metadata search / browse / direct entity discovery；这保护 Context/Metadata Plane。
+> Context chooses; semantics computes.
 
-DataHub Agent Registry 可以把 data classification 通过 lineage 传播到 consuming Agent，并触发 incident，帮助治理团队发现风险。
+### Incident
 
-但最终某个 Agent / Human 是否能读取具体敏感字段，仍需要 runtime identity、purpose 与 query-time enforcement。
+> Automation without independent verification is incomplete automation.
 
-所以生产 Agent Governance 必须同时回答：
+### Governance
 
-~~~text
-What can the Agent discover?
-What is the data classified as?
-Who is invoking the Agent?
-What is the purpose?
-What may that principal actually read or do?
+> Context visibility != runtime authorization.
+
+### Cross-case
+
+> **Agent Reliability is a cross-plane property.**
+
+模型只是其中一个变量；context、semantic definition、identity、authority、policy、data state 和 verification 共同决定最终可靠性。
+
+## 当前总模型
+
+~~~mermaid
+flowchart TB
+    subgraph CONTEXT[Shared Context Plane]
+        ID[Identity]
+        GRAPH[Relationships]
+        TRUST[Trust / Freshness]
+        AUTH[Authority]
+    end
+
+    subgraph AGENT[Agent Plane]
+        PLAN[Interpret / Plan]
+        DEC[Human Decision]
+    end
+
+    subgraph EXEC[Execution Planes]
+        SEM[Semantic Runtime]
+        POLICY[Policy Runtime]
+        TOOLS[Warehouse / Git / SaaS]
+    end
+
+    subgraph REL[Reliability]
+        VERIFY[Independent Verification]
+        AUDIT[Decision Audit]
+    end
+
+    CONTEXT --> AGENT
+    AGENT --> EXEC
+    EXEC --> REL
+    REL -.feedback.-> CONTEXT
 ~~~
 
 ## Next
 
-Cross-case synthesis 会从 Analytics、Incident Repair、Governance 三个案例中抽出 Context Platform 的不可约核心。
+建议进入：
+
+> **Phase 4 — Comparative Architecture**
+
+不比较产品“谁最好”，而比较各条技术路线分别把 Identity、Graph、Context Lifecycle、Authority、Semantic Execution、Policy、Agent Activation、Write-back 与 Audit 放在哪里。
